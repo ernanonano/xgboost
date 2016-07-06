@@ -40,7 +40,7 @@ export CXX = $(if $(shell which g++-5),g++-5,g++)
 endif
 
 export LDFLAGS= -pthread -lm $(ADD_LDFLAGS) $(DMLC_LDFLAGS) $(PLUGIN_LDFLAGS)
-export CFLAGS=  -std=c++0x -Wall -O3 -msse2  -Wno-unknown-pragmas -funroll-loops -Iinclude $(ADD_CFLAGS) $(PLUGIN_CFLAGS)
+export CFLAGS=  -std=c++0x -Wall -O3 -fpermissive -Wno-unknown-pragmas -funroll-loops -Iinclude $(ADD_CFLAGS) $(PLUGIN_CFLAGS)
 CFLAGS += -I$(DMLC_CORE)/include -I$(RABIT)/include
 #java include path
 export JAVAINCFLAGS = -I${JAVA_HOME}/include -I./java
@@ -57,7 +57,6 @@ else
 endif
 
 ifeq ($(UNAME), Linux)
-	LDFLAGS += -lrt
 	JAVAINCFLAGS += -I${JAVA_HOME}/include/linux
 endif
 

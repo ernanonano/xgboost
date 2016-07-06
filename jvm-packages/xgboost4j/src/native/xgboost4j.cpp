@@ -23,7 +23,7 @@
 // helper functions
 // set handle
 void setHandle(JNIEnv *jenv, jlongArray jhandle, void* handle) {
-  long out = (long) handle;
+  long long out = (long long) handle;
   jenv->SetLongArrayRegion(jhandle, 0, 1, &out);
 }
 
@@ -71,7 +71,7 @@ XGB_EXTERN_C int XGBoost4jCallbackDataIterNext(
         batch, jenv->GetFieldID(batchClass, "featureValue", "[F"));
       XGBoostBatchCSR cbatch;
       cbatch.size = jenv->GetArrayLength(joffset) - 1;
-      cbatch.offset = jenv->GetLongArrayElements(joffset, 0);
+      cbatch.offset =  jenv->GetLongArrayElements(joffset, 0);
       if (jlabel != nullptr) {
         cbatch.label = jenv->GetFloatArrayElements(jlabel, 0);
         CHECK_EQ(jenv->GetArrayLength(jlabel), static_cast<long>(cbatch.size))
@@ -97,7 +97,7 @@ XGB_EXTERN_C int XGBoost4jCallbackDataIterNext(
       CHECK_EQ((*set_function)(set_function_handle, cbatch), 0)
           << XGBGetLastError();
       // release the elements.
-      jenv->ReleaseLongArrayElements(joffset, cbatch.offset, 0);
+      jenv->ReleaseLongArrayElements(joffset,  cbatch.offset, 0);
       jenv->DeleteLocalRef(joffset);
       if (jlabel != nullptr) {
         jenv->ReleaseFloatArrayElements(jlabel, cbatch.label, 0);
@@ -199,7 +199,7 @@ JNIEXPORT jint JNICALL Java_ml_dmlc_xgboost4j_java_XGBoostJNI_XGDMatrixCreateFro
   jfloat* data = jenv->GetFloatArrayElements(jdata, 0);
   bst_ulong nindptr = (bst_ulong)jenv->GetArrayLength(jindptr);
   bst_ulong nelem = (bst_ulong)jenv->GetArrayLength(jdata);
-  int ret = (jint) XGDMatrixCreateFromCSR((unsigned long const *)indptr, (unsigned int const *)indices, (float const *)data, nindptr, nelem, &result);
+  int ret = (jint) XGDMatrixCreateFromCSR((unsigned long long const *)indptr, (unsigned int const *)indices, (float const *)data, nindptr, nelem, &result);
   setHandle(jenv, jout, result);
   //Release
   jenv->ReleaseLongArrayElements(jindptr, indptr, 0);
@@ -222,7 +222,7 @@ JNIEXPORT jint JNICALL Java_ml_dmlc_xgboost4j_java_XGBoostJNI_XGDMatrixCreateFro
   bst_ulong nindptr = (bst_ulong)jenv->GetArrayLength(jindptr);
   bst_ulong nelem = (bst_ulong)jenv->GetArrayLength(jdata);
 
-  int ret = (jint) XGDMatrixCreateFromCSC((unsigned long const *)indptr, (unsigned int const *)indices, (float const *)data, nindptr, nelem, &result);
+  int ret = (jint) XGDMatrixCreateFromCSC((unsigned long long const *)indptr, (unsigned int const *)indices, (float const *)data, nindptr, nelem, &result);
   setHandle(jenv, jout, result);
   //release
   jenv->ReleaseLongArrayElements(jindptr, indptr, 0);
