@@ -6,9 +6,6 @@
 #
 # see config.mk for template.
 #-----------------------------------------------------------
-#export PATH="/tmp/my-android-toolchain/bin:$PATH"
-export CC="arm-linux-androideabi-gcc"
-export CXX="arm-linux-androideabi-g++"
 
 # Whether enable openmp support, needed for multi-threading.
 USE_OPENMP = 0
@@ -29,3 +26,4 @@ LIB_RABIT = librabit_empty.a
 
 DMLC_CFLAGS = -DDMLC_ENABLE_STD_THREAD=0
 ADD_CFLAGS = -DDMLC_ENABLE_STD_THREAD=0
+
