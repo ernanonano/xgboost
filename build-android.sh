@@ -37,6 +37,7 @@ function init(){
 }
 
 function setup(){
+    rm -rf ${MYTOOLCHAIN_PATH}
     setup_toolchain
 }
 
