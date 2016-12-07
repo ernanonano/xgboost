@@ -40,7 +40,7 @@ typedef struct {
   /*! \brief number of rows in the minibatch */
   size_t size;
   /*! \brief row pointer to the rows in the data */
-  long long* offset;  // NOLINT(*)
+  long * offset;  // NOLINT(*)
   /*! \brief labels of each instance */
   float* label;
   /*! \brief weight of each instance, can be NULL */

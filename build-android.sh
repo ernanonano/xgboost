@@ -11,23 +11,22 @@ set -a
 function init(){
     NDK=${NDK:-$ANDROID_NDK_HOME}
     # For ABI options see https://developer.android.com/ndk/guides/standalone_toolchain.html#syt
-    ABI=arm-linux-androideabi
+    #ABI=arm-linux-androideabi
     # ABI=x86
     # ABI=mipsel-linux-android
-    # ABI=aarch64-linux-android
+    ABI=aarch64-linux-android
     # ABI=x86_64
     # ABI=mips64el-linux-android
     GCC_VERSION=4.6
     ABI_CC=$ABI-$GCC_VERSION
 
     # For platform version see https://source.android.com/source/build-numbers.html
-    PLATFORM=android-9
+    PLATFORM=android-21
 
     MYTOOLCHAIN_PATH=/tmp/tc-$ABI
 }
 
 function setup(){
-    init
     setup_toolchain
 }
 
@@ -73,6 +72,7 @@ function build(){
     build_lib && build_java
 }
 
-if setup && build; then
+init
+if build; then
     echo "Successfully build android xgboost"
 fi
