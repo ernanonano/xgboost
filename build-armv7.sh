@@ -11,17 +11,17 @@ set -a
 function init(){
     NDK=${NDK:-$ANDROID_NDK_HOME}
     # For ABI options see https://developer.android.com/ndk/guides/standalone_toolchain.html#syt
-    #ABI=arm-linux-androideabi
+    ABI=arm-linux-androideabi
     # ABI=x86
     # ABI=mipsel-linux-android
-    ABI=aarch64-linux-android
+    # ABI=aarch64-linux-android
     # ABI=x86_64
     # ABI=mips64el-linux-android
     GCC_VERSION=4.6
     ABI_CC=$ABI-$GCC_VERSION
 
     # For platform version see https://source.android.com/source/build-numbers.html
-    PLATFORM=android-21
+    PLATFORM=android-9
 
     MYTOOLCHAIN_PATH=/tmp/tc-$ABI
 }
@@ -51,7 +51,7 @@ function build_lib(){
     export CC="$ABI-gcc"
     export CXX="$ABI-g++"
     export AR="$ABI-ar"
-    cp make/android.mk config.mk
+    cp make/android-armv7a.mk config.mk
     clean
     make -j 4 lib/libxgboost.so
 }
