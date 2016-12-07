@@ -9,10 +9,13 @@ dl="so"
 dis_omp=0
 
 if [ $(uname) == "Darwin" ]; then
-  export JAVA_HOME=$(/usr/libexec/java_home)
-  dl="dylib"
-  #change this to 0 if your compiler support openmp
-  dis_omp=1
+    export JAVA_HOME=$(/usr/libexec/java_home)
+    if [ $ABI == "" ]; then
+        export ABI="darwin"
+        dl="dylib"
+    fi
+    #change this to 0 if your compiler support openmp
+    dis_omp=1
 fi
 
 cd ..
@@ -25,8 +28,11 @@ if [ ! -d "$libPath" ]; then
   mkdir -p "$libPath"
 fi
 
-rm -f xgboost4j/src/main/resources/lib/libxgboost4j.${dl}
-mv lib/libxgboost4j.so xgboost4j/src/main/resources/lib/libxgboost4j.${dl}
+TARGET=$libPath/libxgboost4j.${ABI}.${dl}
+SOURCE=lib/libxgboost4j.so
+
+rm -f $TARGET
+mv $SOURCE $TARGET
 # copy python to native resources
 cp ../dmlc-core/tracker/dmlc_tracker/tracker.py xgboost4j/src/main/resources/tracker.py
 # copy test data files
