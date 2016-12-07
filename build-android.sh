@@ -24,6 +24,7 @@ function init(){
     PLATFORM=android-21
 
     MYTOOLCHAIN_PATH=/tmp/tc-$ABI
+    PATH=$MYTOOLCHAIN_PATH/bin:$PATH
 
     ABI_PREFIX=$ABI
     
@@ -56,7 +57,6 @@ function clean(){
 
 function build_lib(){
     echo "build_lib..."
-    export PATH=$MYTOOLCHAIN_PATH/bin:$PATH
     cp make/android.mk config.mk
     clean
     make -j 4 lib/libxgboost.so
@@ -64,7 +64,6 @@ function build_lib(){
 
 function build_java(){
     echo "build_lib..."
-    export PATH=$MYTOOLCHAIN_PATH/bin:$PATH
     cd jvm-packages/
     ./create_jni.sh
     cd -
