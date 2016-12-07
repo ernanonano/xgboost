@@ -73,6 +73,7 @@ function build(){
     build_lib && build_java
 }
 
+init
 if setup && build; then
     echo "Successfully build android xgboost"
 fi
