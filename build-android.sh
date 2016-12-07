@@ -52,7 +52,7 @@ function build_lib(){
     export CC="$ABI-gcc"
     export CXX="$ABI-g++"
     export AR="$ABI-ar"
-    cp make/android.mk config.mk
+    cp make/android-armv7a.mk config.mk
     clean
     make -j 4 lib/libxgboost.so
 }
