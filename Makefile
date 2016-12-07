@@ -113,7 +113,7 @@ lib/libxgboost_all.so: $(AMALGA_OBJ) $(LIB_DEP)
 
 lib/libxgboost.a: $(ALL_DEP)
 	@mkdir -p $(@D)
-	ar crv $@ $(filter %.o, $?)
+	$(AR) crv $@ $(filter %.o, $?)
 
 lib/libxgboost.dll lib/libxgboost.so: $(ALL_DEP)
 	@mkdir -p $(@D)
