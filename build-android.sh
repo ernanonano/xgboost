@@ -11,17 +11,17 @@ set -a
 function init(){
     NDK=${NDK:-$ANDROID_NDK_HOME}
     # For ABI options see https://developer.android.com/ndk/guides/standalone_toolchain.html#syt
-    #ABI=arm-linux-androideabi
+    ABI=arm-linux-androideabi
     # ABI=x86
     # ABI=mipsel-linux-android
     # ABI=aarch64-linux-android
     # ABI=x86_64
-    ABI=mips64el-linux-android
+    # ABI=mips64el-linux-android
     GCC_VERSION=4.6
     ABI_CC=$ABI-$GCC_VERSION
 
     # For platform version see https://source.android.com/source/build-numbers.html
-    PLATFORM=android-21
+    PLATFORM=android-9
 
     MYTOOLCHAIN_PATH=/tmp/tc-$ABI
     PATH=$MYTOOLCHAIN_PATH/bin:$PATH
@@ -30,6 +30,9 @@ function init(){
     
     if [ ${ABI} == "x86" ]; then
         ABI_PREFIX="i686-linux-android"
+    fi
+    if [ ${ABI} == "x86_64" ]; then
+        ABI_PREFIX="x86_64-linux-android"
     fi
     export CC="$ABI_PREFIX-gcc"
     export CXX="$ABI_PREFIX-g++"
@@ -58,16 +61,16 @@ function clean(){
 
 function build_lib(){
     echo "build_lib..."
-    cp make/android.mk config.mk
-    clean
-    make -j 4 lib/libxgboost.so
+    cp make/android.mk config.mk && \
+        clean && \
+        make -j 4 lib/libxgboost.so
 }
 
 function build_java(){
     echo "build_lib..."
-    cd jvm-packages/
-    ./create_jni.sh
-    cd -
+    cd jvm-packages && \
+        ./create_jni.sh &&
+        cd -
 }
 
 function build(){
@@ -77,4 +80,6 @@ function build(){
 init
 if setup && build; then
     echo "Successfully build android xgboost"
+else
+    echo "ERROR building xgboost for android"
 fi

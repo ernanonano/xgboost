@@ -23,7 +23,7 @@
 // helper functions
 // set handle
 void setHandle(JNIEnv *jenv, jlongArray jhandle, void* handle) {
-  long long out = (long long) handle;
+  __INT64_TYPE__ out = (__INT64_TYPE__) handle;
   jenv->SetLongArrayRegion(jhandle, 0, 1, &out);
 }
 
